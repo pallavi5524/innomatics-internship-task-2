@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Coupon Redemption</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0; 
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+label {
+    margin-right: 10px;
+    display: block;
+    margin-top: 10px;
+}
+
+input, button {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px);
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>E-commerce Coupon Redemption</h1>
+        <label for="orderAmount">Enter Order Amount ($):</label>
+        <input type="number" id="orderAmount" placeholder="Enter order amount" min="0" required>
+        
+        <label for="couponCode">Enter Coupon Code:</label>
+        <input type="text" id="couponCode" placeholder="Enter coupon code" required>
+        
+        <button id="applyButton">Apply Coupon</button>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        function applyCoupon(orderAmount, couponCode) {
+    const DISCOUNT10_THRESHOLD = 500;
+    const FREESHIP_THRESHOLD = 200;
+    const SHIPPING_COST = 10; // Assuming a fixed shipping cost
+
+    let finalPrice = orderAmount;
+
+    // Check for DISCOUNT10 coupon
+    if (couponCode === "DISCOUNT10" && orderAmount > DISCOUNT10_THRESHOLD) {
+        finalPrice *= 0.90; // Apply 10% discount
+    }
+
+    // Check for FREESHIP coupon
+    if (couponCode === "FREESHIP" && orderAmount > FREESHIP_THRESHOLD) {
+        // Free shipping, do not add shipping cost
+        finalPrice = finalPrice; // No change needed, just for clarity
+    } else {
+        // Add shipping cost if FREESHIP is not applied
+        finalPrice += SHIPPING_COST;
+    }
+
+    return finalPrice.toFixed(2); // Return price formatted to 2 decimal places
+}
+
+document.getElementById('applyButton').addEventListener('click', function() {
+    const orderAmount = parseFloat(document.getElementById('orderAmount').value);
+    const couponCode = document.getElementById('couponCode').value.trim();
+
+    if (isNaN(orderAmount) || orderAmount < 0 || !couponCode) {
+        document.getElementById('result').innerText = "Please enter a valid order amount and coupon code.";
+        return;
+    }
+
+    const finalPrice = applyCoupon(orderAmount, couponCode);
+    document.getElementById('result').innerText = `Final Price: $${finalPrice}`;
+});
+    </script>
+</body>
+</html>
