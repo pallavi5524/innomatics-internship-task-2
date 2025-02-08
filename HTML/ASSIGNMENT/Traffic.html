@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Traffic Light System</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0; 
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+label {
+    margin-right: 10px;
+}
+
+select, button {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Traffic Light System</h1>
+        <label for="density">Select Traffic Density:</label>
+        <select id="density">
+            <option value="heavy">Heavy Traffic</option>
+            <option value="moderate">Moderate Traffic</option>
+            <option value="light">Light Traffic</option>
+        </select>
+        <button id="checkButton">Check Green Light Duration</button>
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        function trafficLightControl(density) {
+    switch (density) {
+        case 'heavy':
+            return 60; 
+        case 'moderate':
+            return 40; 
+        case 'light':
+            return 20; 
+        default:
+            return 0; 
+    }
+}
+
+document.getElementById('checkButton').addEventListener('click', function() {
+    const density = document.getElementById('density').value;
+    const duration = trafficLightControl(density);
+    document.getElementById('result').innerText = `Green light will stay on for ${duration} seconds.`;
+});
+    </script>
+</body>
+</html>
